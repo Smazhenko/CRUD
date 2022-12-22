@@ -17,7 +17,7 @@ module.exports = {
         allowNull: false,
         references: {
           model: {
-            tableName: 'heroes',
+            tableName: 'heros',
             key: 'id'
           },
         },
