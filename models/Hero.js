@@ -14,16 +14,28 @@ module.exports = (sequelize, DataTypes) => {
         through: 'heroes_to_powers',
         foreignKey: 'heroId'
       });
+      Hero.hasMany(models.Image, {
+        foreignKey: 'heroId'
+      });
     }
   }
   Hero.init({
     nickName:{
       type: DataTypes.STRING,
-      allowNull:false
+      unique: true,
+      allowNull:false,
+      validate: {
+        notEmpty:true,
+        notNull: true,
+      }
     } ,
     realName: {
       type:DataTypes.STRING,
-      allowNull:false
+      allowNull:false,
+      validate: {
+        notEmpty:true,
+        notNull: true,
+      }
     } ,
     originDescription: {
       type: DataTypes.TEXT,
