@@ -17,8 +17,7 @@ module.exports.validateHero = async (req, res, next) =>{
 module.exports.getHeroInstance  = async( req, res, next) =>{
     try{
         const {params:{heroId}} = req;
-        const hero = await Hero.findByPk(heroId, {
-});
+        const hero = await Hero.findByPk(heroId);
         if(!hero) {
             throw new Error ('Hero not found');
         }

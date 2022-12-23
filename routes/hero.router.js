@@ -9,6 +9,12 @@ const heroRouter = Router();
 
 heroRouter.post('/', validateHero,  HeroController.createHero);
 
+
+heroRouter.put('/:heroId',getHeroInstance,  HeroController.updateHero );
+
+
+
+
 // userRouter.get('/',UserController.findAll);
 
 
