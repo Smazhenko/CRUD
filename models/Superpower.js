@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   Superpower.init({
     powerName: {
       type: DataTypes.STRING,
+      unique: true,
     } ,
     description: {
       type:DataTypes.TEXT
