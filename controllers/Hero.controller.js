@@ -3,11 +3,23 @@ const {Hero} = require('../models');
 module.exports.createHero = async (req, res, next) =>{
     try{
         const createdHero = await Hero.create(req.body);
-        return res.status(201).send(createdHero);
+        if(req.powerInstanceId) {
+            req.heroInstance = createdHero;
+            next();
+        } else{
+            return res.status(201).send(createdHero);
+        }
+        
+        
+       
     } catch(err) {
         next(err)
     }
 };
+
+
+
+
 
 module.exports.updateHero = async( req, res, next) =>{
     try{
@@ -56,5 +68,17 @@ module.exports.findOnePk = async(req, res, next) =>{
         return res.status(200).send(heroInstance);
     } catch(err) {
         next(err)
+    }
+}
+
+module.exports.addPowerToHero = async(req,res,next) =>{
+ 
+    try{
+        const {heroInstance, powerInstanceId} = req;
+        const result = await heroInstance.addSuperpower(powerInstanceId);
+        res.status(201).send( heroInstance)
+        
+    } catch(err) {
+        next(err);
     }
 }
