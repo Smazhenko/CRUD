@@ -1,4 +1,4 @@
-const {Hero} = require('../models');
+const {Hero, Image} = require('../models');
 
 module.exports.createHero = async (req, res, next) =>{
     try{
@@ -80,5 +80,29 @@ module.exports.addPowerToHero = async(req,res,next) =>{
         
     } catch(err) {
         next(err);
+    }
+}
+
+
+module.exports.addImage = async (req, res, next) =>{
+    try{
+        const {params: {heroId}, file:{filename}} = req;
+        const updatedImage = await Image.create({
+            imagePath: filename,
+            heroId: heroId,
+            returning: true
+        })
+        console.log(updatedImage)
+        res.status(200).send(updatedImage);
+    } catch(err) {
+        next(err)
+    }
+}
+
+module.exports.addPowerToHero= async(req, res, next) =>{
+    try{
+
+    } catch(err) {
+        next(err)
     }
 }

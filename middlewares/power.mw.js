@@ -18,7 +18,7 @@ module.exports.validatePower = async (req, res, next) =>{
 
 module.exports.createPower = async (req, res,next) =>{
     try{
-        const createdPower = await Superpower.create(req.body.powerName);
+        const createdPower = await Superpower.create(req.body);
         return res.status(201).send(createdPower);
     } catch(err) {
         next(err)
@@ -35,7 +35,7 @@ module.exports.getSuperpower = async (req, res, next) =>{
             
             if(Array.isArray(powerName)) {
                 for(str of powerName) {
-                    resultArray.push (await Superpower.findAll({
+                    resultArray.push (await Superpower.findOrCreate({
                         where:{
                             powerName: str
                         }
@@ -43,21 +43,28 @@ module.exports.getSuperpower = async (req, res, next) =>{
                  }
                  for(let i =0; i < resultArray.length; i++) {
                         resultArray[i].map((obj)=>{
-                            powersId.push(obj.id)
+                            if(obj.id!= null) {
+                                powersId.push(obj.id)
+                            }
                         })
                  }
                  req.powerInstanceId = powersId;
-                next();
+                 res.status(200).send(powersId)
+            //    return  next();
     
             } else if(typeof powerName == 'string') {
-                
-                resultArray.push (await Superpower.findAll({
+               
+              resultArray.push (await Superpower.findOrCreate({
                     where:{
                         powerName
                     }
                 }))
                 resultArray[0].map((obj)=>{
-                    powersId.push(obj.id)
+                    if(obj.id != null) {
+                        powersId.push(obj.id)
+                    }
+                   
+                    
                 })
                 req.powerInstanceId = powersId;
                 next();
